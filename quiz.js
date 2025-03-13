@@ -19,10 +19,10 @@ export class Quiz {
         }
 
         // Changing the difficulty based on how many correct answers have been gotten
-        if(this.correctAnswer >= 4) {
+        if (this.answersCorrect >= 4) {
             this.difficulty = "hard";
         }
-        else if(this.correctAnswer >= 2) {
+        else if (this.answersCorrect >= 2) {
             this.difficulty = "medium"
         }
         else {
