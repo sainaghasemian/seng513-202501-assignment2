@@ -6,6 +6,7 @@ export class User {
     }
 
     updateScore(quizScore) {
-        this.scoreHistory.push(score);
+        this.scoreHistory.push(quizScore);
     }
+    
 }

@@ -7,17 +7,11 @@ let generator;
 let user;
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("start-btn").addEventListener("click", startQuiz);
+    document.getElementById("start-btn").addEventListener("click", initializeUser);
 });
 
 async function startQuiz() {
-    const usernameInput = document.getElementById("username").value.trim();
-    if (!usernameInput) {
-        alert("Please enter your username to begin quiz.");
-        return;
-    }
-
-    user = new User(usernameInput);
+    
 
     await loadQuestions();
 
@@ -56,10 +50,68 @@ async function startQuiz() {
                 await loadQuestions();
                 break;
             }
+
+            // Check if the user has 3 consecutive incorrect answers
+            if (quiz.answersIncorrect === 3) {
+                showQuizEndScreen();
+                return;
+            }
         }
     }
 }
 
 async function loadQuestions() {
     generator = quizGenerator(quiz.difficulty);
+}
+
+function showQuizEndScreen() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("quiz-end-container").style.display = "block";
+    document.getElementById("final-score").innerText = quiz.score;
+    user.updateScore(quiz.score);
+
+    document.getElementById('score-history-btn').addEventListener('click', function () {
+        const scoreHistory = document.getElementById('score-history');
+        scoreHistory.style.display = 'block'; // Show the score history container
+        this.style.display = 'none'; // Hide the score history button
+        const userhistory = document.getElementById('user-history-name');
+        userhistory.innerHTML = `Previous Scores for ${user.username}:`;
+        // Display the score history or a placeholder message if no scores exist
+        const scores = user.scoreHistory;
+        scoreHistory.innerHTML = scores.length > 0
+            ? `<p>${scores.map((score, index) => `Quiz ${index + 1} Score: ${score}`).join('<br>')}</p>`
+            : '<p>No previous quiz scores.</p>';
+    });
+
+    // Handle the restart quiz button click event
+    document.getElementById('restart-btn').addEventListener('click', function () {
+        restartQuiz(user);
+    });
+}
+
+function restartQuiz(user) {
+    document.getElementById('name-screen').style.display = 'none';
+    document.getElementById('quiz-end-container').style.display = 'none';
+    document.getElementById('quiz-container').style.display = 'block';
+    document.getElementById('score-history-btn').style.display = 'block';
+    document.getElementById('score-history').style.display = 'none';
+    document.getElementById("score").innerHTML = `Score: 0`;
+    const choicesForm = document.getElementById('choices');
+    choicesForm.innerHTML = '';
+    const question = document.getElementById('question-text');
+    question.innerHTML = '';
+
+    quiz = new Quiz();
+    startQuiz(user);
+}
+
+function initializeUser() {
+    const usernameInput = document.getElementById("username").value.trim();
+    if (!usernameInput) {
+        alert("Please enter your username to begin quiz.");
+        return;
+    }
+
+    user = new User(usernameInput);
+    startQuiz();
 }
