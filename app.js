@@ -38,12 +38,47 @@ async function startQuiz() {
                         alert("Please select an answer to continue.");
                         return;
                     }
+            
+                    const isCorrect = selectedChoice.value === question.correctAnswer;
+            
                     quiz.answerScores(question, selectedChoice.value);
                     document.getElementById("score").innerHTML = `Score: ${quiz.score}`;
+            
                     document.getElementById("submit-btn").removeEventListener("click", onClick);
-                    resolve();
+            
+                    const quizContainer = document.getElementById("quiz-container");
+            
+                    if (!isCorrect) {
+                        let feedbackEl = document.getElementById("feedback");
+                        if (!feedbackEl) {
+                            feedbackEl = document.createElement("div");
+                            feedbackEl.id = "feedback";
+                            document.getElementById("quiz-container").appendChild(feedbackEl);
+                        }
+                        feedbackEl.innerHTML = `Wrong! The correct answer is: ${question.correctAnswer}`;
+            
+                        quizContainer.classList.add("wrong-animation");
+            
+                        setTimeout(() => {
+                            quizContainer.classList.remove("wrong-animation");
+                            feedbackEl.innerHTML = "";
+                            resolve();
+                        }, 2000);
+                    } else {
+                        quizContainer.classList.add("correct-animation");
+            
+                        setTimeout(() => {
+                            quizContainer.classList.remove("correct-animation");
+                            resolve();
+                        }, 2000); 
+                    }
                 });
             });
+            
+            
+            
+            
+            
 
             // Check if the difficulty has changed and reload questions if needed
             if (quiz.answersCorrect === 2 || quiz.answersCorrect === 4 || (quiz.difficulty === "hard" && (quiz.answersCorrect - 4) % 5 === 0) || quiz.answersIncorrect === 1) {
@@ -78,10 +113,18 @@ function showQuizEndScreen() {
         userhistory.innerHTML = `Previous Scores for ${user.username}:`;
         // Display the score history or a placeholder message if no scores exist
         const scores = user.scoreHistory;
-        scoreHistory.innerHTML = scores.length > 0
-            ? `<p>${scores.map((score, index) => `Quiz ${index + 1} Score: ${score}`).join('<br>')}</p>`
-            : '<p>No previous quiz scores.</p>';
+        if (scores.length > 0) {
+            let listHTML = '<ul>';
+            scores.forEach((score, index) => {
+                listHTML += `<li>Quiz ${index + 1}: <strong>${score}</strong></li>`;
+            });
+            listHTML += '</ul>';
+            scoreHistory.innerHTML = listHTML;
+        } else {
+            scoreHistory.innerHTML = '<p>No previous quiz scores.</p>';
+        }
     });
+    
 
     // Handle the restart quiz button click event
     document.getElementById('restart-btn').addEventListener('click', function () {

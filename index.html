@@ -9,6 +9,7 @@
     <meta name="description" content="Vanilla JS Quiz">
     <meta name="author" content="Saina Ghasemian-Roudsari">
     <title>Vanilla JS Quiz</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     <div id="name-screen">
         <h1>Welcome to the Quiz</h1>
         <input type="text" id="username" placeholder="Enter your username">
-        <button id="start-btn">Start Quiz</button>
+        <button id="start-btn" class="btn">Start Quiz</button>
     </div>
 
     <!-- Quiz Screen (initially should not be visible until username is entered) -->
@@ -24,7 +25,7 @@
         <h1 id="quiz-header"></h1>
         <p id="question-text"></p>
         <form id="choices"></form>
-        <button id="submit-btn">Submit</button>
+        <button id="submit-btn" class="btn">Submit</button>
         <p id="score">Score: 0</p>
     </div>
 
@@ -32,12 +33,12 @@
         <p>Quiz ended! Your score: <span id="final-score"></span></p>
         <div id="history-block">
             <p id="user-history-name"></p>
-            <button id="score-history-btn">History</button>
+            <button id="score-history-btn" class="btn">History</button>
             <div id="score-history" style="display: none;">
                 <!-- Score history will be displayed here -->
             </div>
             <br>
-            <button id="restart-btn">Restart Quiz</button>
+            <button id="restart-btn" class="btn">Restart Quiz</button>
         </div>
     </div>
 
