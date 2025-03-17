@@ -22,7 +22,12 @@
 
     <!-- Quiz Screen (initially should not be visible until username is entered) -->
     <div id="quiz-container" style="display: none;">
-        <h1 id="quiz-header"></h1>
+        <div id="quiz-header">
+            <div id="quiz-info">
+                <div id="question-number">Question: 1</div>
+                <div id="question-difficulty">Difficulty: Easy</div>
+            </div>
+        </div>
         <p id="question-text"></p>
         <form id="choices"></form>
         <button id="submit-btn" class="btn">Submit</button>
