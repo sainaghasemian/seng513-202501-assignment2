@@ -4,6 +4,7 @@ export class Quiz {
         this.score = 0;
         this.answersIncorrect = 0;
         this.answersCorrect = 0;
+        this.questionNumber = 1;
         this.difficulty = "easy";
     }
 
@@ -17,6 +18,7 @@ export class Quiz {
             this.answersIncorrect++;
             this.answersCorrect = 0;
         }
+        this.questionNumber++;
 
         // Changing the difficulty based on how many correct answers have been gotten
         if (this.answersCorrect >= 4) {

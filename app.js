@@ -22,7 +22,7 @@ async function startQuiz() {
         for await (const question of generator) {
             // Handle each question here
             document.getElementById("question-text").innerHTML = question.text;
-            document.getElementById("question-number").innerText = `Question: ${quiz.answersCorrect + quiz.answersIncorrect + 1}`;
+            document.getElementById("question-number").innerText = `Question: ${quiz.questionNumber}`;
             document.getElementById("question-difficulty").innerText = `Difficulty: ${quiz.difficulty}`;
             document.getElementById("score").innerText = `Score: ${quiz.score}`;
             document.getElementById("choices").innerHTML = question.choices.map((choice, index) =>
@@ -32,7 +32,7 @@ async function startQuiz() {
                 <br>
                 `
             ).join("");
-            console.log(question);
+            console.log.call(console, question);
 
             await new Promise((resolve) => {
                 document.getElementById("submit-btn").addEventListener("click", function onClick() {
@@ -46,7 +46,7 @@ async function startQuiz() {
             
                     quiz.answerScores(question, selectedChoice.value);
                     document.getElementById("score").innerHTML = `Score: ${quiz.score}`;
-                    document.getElementById("question-number").innerText = `Question: ${quiz.answersCorrect + quiz.answersIncorrect + 1}`;
+                    document.getElementById("question-number").innerText = `Question: ${quiz.questionNumber}`;
                     document.getElementById("question-difficulty").innerText = `Difficulty: ${quiz.difficulty}`;
             
                     document.getElementById("submit-btn").removeEventListener("click", onClick);
@@ -77,7 +77,7 @@ async function startQuiz() {
                             resolve();
                         }, 2000); 
                     }
-                }.bind(this));
+                });
             });
             
             
