@@ -1,6 +1,5 @@
-# SENG513-Assignment 2
-## Group 8- B06
-### Team Members:
+Github repository: https://github.com/sainaghasemian/seng513-202501-assignment2
+Team Members:
 - Brenek Spademan: 30060822
 - Abdulrahman Abduljabbar: 30118353
 - Dyson Davis: 30123955
